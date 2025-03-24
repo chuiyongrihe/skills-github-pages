@@ -1,7 +1,158 @@
-Copyright (c) GitHub, Inc.
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阿里乌斯学派 - 官方门户</title>
+    <style>
+        :root {
+            --main-color: #2A0C4E;
+            --accent-color: #E6C300;
+            --text-glow: 0 0 10px rgba(230,195,0,0.5);
+        }
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+        body {
+            background: linear-gradient(45deg, #0A0410 30%, #1A0B2E);
+            color: #EEE;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+        .nav-bar {
+            background: rgba(42,12,78,0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
 
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+        .nav-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin: 0 2rem;
+            text-shadow: var(--text-glow);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 20px var(--accent-color);
+        }
+
+        .banner {
+            height: 70vh;
+            background: url('https://example.com/arius-banner.jpg') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(42,12,78,0.8) 40%, transparent);
+        }
+
+        .news-ticker {
+            background: rgba(0,0,0,0.7);
+            padding: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .news-content {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .character-card {
+            background: rgba(42,12,78,0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .character-card:hover {
+            transform: translateY(-10px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-link { margin: 0 1rem; }
+            .banner { height: 50vh; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="#home" class="nav-link">首页</a>
+        <a href="#doctrine" class="nav-link">教义阐释</a>
+        <a href="#members" class="nav-link">成员档案</a>
+        <a href="#contact" class="nav-link">启示录</a>
+    </nav>
+
+    <div class="banner">
+        <h1 style="z-index:1;font-size:3em;text-shadow:0 0 30px var(--accent-color);">
+            阿里乌斯学派
+        </h1>
+    </div>
+
+    <div class="news-ticker">
+        <div class="news-content">
+            ▶ 新启示录解经会将于月蚀之夜举行 ▶ 夏莱特别观察报告已更新 ▶ 战术教典《黑曜石禁章》修订版开放查阅 ▶
+        </div>
+    </div>
+
+    <div class="character-grid">
+        <div class="character-card">
+            <img src="https://example.com/beatrix.jpg" alt="贝阿朵莉丝" style="width:100%;">
+            <div style="padding:1rem;">
+                <h3>贝阿朵莉丝</h3>
+                <p>「真理永远需要牺牲来证明」</p>
+            </div>
+        </div>
+        <!-- 添加更多角色卡片 -->
+    </div>
+
+    <script>
+        // 动态加载角色数据
+        fetch('https://api.example.com/arius-members')
+            .then(response => response.json())
+            .then(data => {
+                const grid = document.querySelector('.character-grid');
+                data.forEach(member => {
+                    grid.innerHTML += `
+                        <div class="character-card">
+                            <img src="${member.image}" alt="${member.name}">
+                            <div>
+                                <h3>${member.name}</h3>
+                                <p>${member.quote}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+
+        // 视差滚动效果
+        window.addEventListener('scroll', () => {
+            const banner = document.querySelector('.banner');
+            banner.style.backgroundPositionY = window.pageYOffset * 0.5 + 'px';
+        });
+    </script>
+</body>
+</html>
